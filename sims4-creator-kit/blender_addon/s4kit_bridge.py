@@ -587,6 +587,14 @@ def register():
         bpy.utils.register_class(c)
     bpy.types.Scene.s4kit_port = bpy.props.IntProperty(name="Port", default=DEFAULT_PORT,
                                                        min=1024, max=65535)
+    # Auto-start the bridge when Blender opens with its UI (not in background/batch runs).
+    # Set S4KIT_AUTOSTART=0 to disable.
+    if not bpy.app.background and os.environ.get("S4KIT_AUTOSTART", "1") != "0":
+        def _autostart():
+            with contextlib.suppress(OSError):  # port busy -> another Blender has it
+                start_bridge(int(os.environ.get("S4KIT_BLENDER_PORT", DEFAULT_PORT)))
+            return None
+        bpy.app.timers.register(_autostart, first_interval=1.0)
 
 
 def unregister():

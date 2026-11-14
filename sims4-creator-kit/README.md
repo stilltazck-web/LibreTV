@@ -19,6 +19,14 @@ Claude ⇄ (MCP stdio) ⇄ s4kit server ─┬─ files: Mods, Tray, Options.ini
 
 ## Install (Windows)
 
+**Quickest:** open PowerShell, paste the whole of `bootstrap_windows.ps1`, and press Enter.
+It installs Git and Python if they're missing, downloads S4Kit to `%USERPROFILE%\S4Kit`, and
+installs and tests it. It also connects it to Claude Desktop and Claude Code (keeping your other
+connectors), installs and enables the Blender add-on (the bridge auto-starts when Blender
+opens), and reports what it found. It's safe to run again to update.
+
+**Manual install:**
+
 Requirements: Python 3.10+, The Sims 4, Sims 4 Studio, and Blender (the version your S4S release supports).
 
 ```powershell
@@ -33,7 +41,9 @@ Then connect Claude:
   `%APPDATA%\Claude\claude_desktop_config.json` (fix the path), then restart Claude.
 
 Install the Blender add-on: **Edit → Preferences → Add-ons → Install…** → choose
-`blender_addon/s4kit_bridge.py` → enable it → **3D View sidebar (N) → S4Kit → Start bridge**.
+`blender_addon/s4kit_bridge.py` → enable it. The bridge starts automatically when Blender
+opens (set `S4KIT_AUTOSTART=0` to turn that off). You can also use the button under
+**3D View sidebar (N) → S4Kit**.
 Alternatively, the `blender_launch` tool starts Blender with the bridge already running.
 
 ### If something isn't found automatically
