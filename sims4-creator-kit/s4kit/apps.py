@@ -238,7 +238,14 @@ def blender_exe() -> Path | None:
         return Path(env)
     if IS_WIN:
         found = glob.glob(r"C:\Program Files\Blender Foundation\Blender*\blender.exe")
-        found += glob.glob(r"C:\Program Files (x86)\Steam\steamapps\common\Blender\blender.exe")
+        found += glob.glob(r"[C-Z]:\Program Files\Blender Foundation\*\blender.exe")
+        found += glob.glob(r"[C-Z]:\*\Blender*\blender.exe")
+        found += [os.path.join(lib, "steamapps", "common", "Blender", "blender.exe")
+                  for lib in _steam_libraries()]
+        w = shutil.which("blender")  # PATH or Microsoft Store app alias
+        if w:
+            found.append(w)
+        found = [f for f in found if os.path.exists(f)]
 
         def ver(p):
             m = re.search(r"Blender (\d+)\.(\d+)", p)
@@ -249,6 +256,16 @@ def blender_exe() -> Path | None:
         return _first_existing(["/Applications/Blender.app/Contents/MacOS/Blender"])
     w = shutil.which("blender")
     return Path(w) if w else None
+
+
+def _steam_libraries() -> list[str]:
+    steam = _win_registry(r"Software\Valve\Steam", "SteamPath") or r"C:\Program Files (x86)\Steam"
+    libs = [steam]
+    vdf = Path(steam) / "steamapps" / "libraryfolders.vdf"
+    if vdf.exists():
+        libs += [m.replace("\\\\", "\\") for m in
+                 re.findall(r'"path"\s+"([^"]+)"', vdf.read_text(encoding="utf-8", errors="ignore"))]
+    return libs
 
 
 ADDON_PATH = Path(__file__).resolve().parent.parent / "blender_addon" / "s4kit_bridge.py"
