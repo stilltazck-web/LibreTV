@@ -1,0 +1,21 @@
+{
+  "name": "Cottage",
+  "rooms": [
+    {"name": "Living",   "x": 0, "y": 0, "w": 6, "h": 5},
+    {"name": "Kitchen",  "x": 6, "y": 0, "w": 4, "h": 5},
+    {"name": "Bedroom",  "x": 0, "y": 5, "w": 5, "h": 4},
+    {"name": "Bath",     "x": 5, "y": 5, "w": 3, "h": 4}
+  ],
+  "doors": [
+    {"room": "Living", "side": "north"},
+    {"between": ["Living", "Kitchen"]},
+    {"between": ["Living", "Bedroom"]},
+    {"between": ["Living", "Bath"]}
+  ],
+  "windows": [
+    {"room": "Living",  "side": "north", "count": 2},
+    {"room": "Kitchen", "side": "east",  "count": 1, "width": 2},
+    {"room": "Bedroom", "side": "west",  "count": 2},
+    {"room": "Bath",    "side": "south", "count": 1}
+  ]
+}

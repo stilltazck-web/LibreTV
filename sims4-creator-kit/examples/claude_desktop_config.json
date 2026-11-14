@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "s4kit": {
+      "command": "C:\\Users\\YOU\\s4kit\\.venv\\Scripts\\s4kit-mcp.exe",
+      "env": {
+        "S4KIT_WORK_DIR": "C:\\Users\\YOU\\Documents\\S4Kit"
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+[project]
+name = "s4kit"
+version = "1.0.0"
+description = "MCP connectors that let Claude drive The Sims 4, Sims 4 Studio and Blender: houses from floorplans/photos and premium custom objects."
+requires-python = ">=3.10"
+dependencies = ["mcp>=1.2", "numpy>=1.24", "pillow>=10"]
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[project.scripts]
+s4kit-mcp = "s4kit.server:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["s4kit"]
